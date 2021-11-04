@@ -1,0 +1,20 @@
+
+server:
+  port: ${APPLICATION_PORT:8080}
+---
+spring:
+  application:
+    name: spotify-service
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        prometheus: /metrics
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - prometheus
