@@ -20,4 +20,9 @@ public class ArtistService {
     public Artist createArtist(ArtistRequest request) {
         return artistMapper.apply(request);
     }
+
+    public Artist deleteArtist(Long id) {
+        return Artist.builder().idArtist(id).gender("GENERO").name("NN").image("null-null").build();
+
+    }
 }
