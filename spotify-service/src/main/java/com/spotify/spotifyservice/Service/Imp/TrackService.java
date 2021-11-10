@@ -28,7 +28,7 @@ public class TrackService implements ITrackService {
     @Autowired
     private List<Track> tracks;
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         //se ejecuta solo una vez cuando se crea el Bean
         tracks.stream().forEach(track -> {

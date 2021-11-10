@@ -12,5 +12,6 @@ public class AlbumRequest {
 
     private Long idAlbum;
     private String name;
-    //private List<Track> tracks;
+    private Long idArtist;
+
 }

@@ -29,7 +29,7 @@ public class ArtistService implements IArtistService {
 
     private Map<Long, Artist> artistMap = new HashMap<>();
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         //se ejecuta solo una vez cuando se crea el Bean
         artists.stream().forEach(artist -> {

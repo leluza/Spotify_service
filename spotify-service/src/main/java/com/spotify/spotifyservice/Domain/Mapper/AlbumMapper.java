@@ -20,7 +20,7 @@ public class AlbumMapper implements Function<AlbumRequest, Album> {
         return Album.builder()
                 .idAlbum(albumRequest.getIdAlbum())
                 .name(albumRequest.getName())
-                //.tracks(new ArrayList<Track>() )
+                .idArtist(albumRequest.getIdArtist())
                 .build();
 
     }

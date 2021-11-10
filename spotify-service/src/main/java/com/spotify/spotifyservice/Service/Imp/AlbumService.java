@@ -1,10 +1,11 @@
 package com.spotify.spotifyservice.Service.Imp;
 
 import com.spotify.spotifyservice.Controller.Request.AlbumRequest;
-import com.spotify.spotifyservice.Controller.Request.ArtistRequest;
+import com.spotify.spotifyservice.Controller.Request.AlbumRequest;
 import com.spotify.spotifyservice.Domain.Mapper.AlbumMapper;
 import com.spotify.spotifyservice.Domain.Model.Album;
-import com.spotify.spotifyservice.Domain.Model.Artist;
+import com.spotify.spotifyservice.Domain.Model.Album;
+import com.spotify.spotifyservice.Domain.Model.Album;
 import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Repository.AlbumRepository;
 import com.spotify.spotifyservice.Service.IAlbumService;
@@ -31,7 +32,7 @@ public class AlbumService implements IAlbumService {
     @Autowired
     private List<Album> albums;
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         //se ejecuta solo una vez cuando se crea el Bean
         albums.stream().forEach(album -> {
@@ -59,8 +60,26 @@ public class AlbumService implements IAlbumService {
 
     public Album createAlbum(AlbumRequest request) {
 
+        Album album = albumMapper.apply(request);
+        album.setIdAlbum(null);
+        albumRepository.save(album);
+        return album;
 
-        return this.albumMapper.apply( request);
+       /**
+        if (request.getIdAlbum() != null && albumRepository.findById(request.getIdAlbum()) != null) {
+            return Album.builder()
+                    .idAlbum(0L)
+                    .idAlbum(0L)
+                    .name("EL album ya EXISTE")
+                    .build();
+
+        } else {
+            albumRepository.save(album);
+        }
+
+        return album;
+        */
+       // return this.albumMapper.apply( request);
     }
 
     public Album deleteAlbum(Long id) {
@@ -80,8 +99,22 @@ public class AlbumService implements IAlbumService {
     }
 
     public Album updateAlbum(Long id, AlbumRequest request) {
-
-        request.setIdAlbum(id);
-        return albumMapper.apply(request);
+        Optional<Album> albumOp = albumRepository.findById(id);
+        Album albumDb = albumOp.get();
+        Album albumRqt = albumMapper.apply(request);
+        if ( albumOp.isPresent()) {
+            if( albumRqt.getName() != null) {albumDb.setName(albumRqt.getName());};
+            if( albumRqt.getIdArtist() != null) {albumDb.setIdArtist(albumRqt.getIdArtist());};
+            albumRepository.save(albumDb);
+        } else {
+            return Album.builder()
+                    .idAlbum(0L)
+                    .name("NO pudo ACTUALIZAR")
+                    .idArtist(0L)
+                    .build();
+        }
+        return albumDb;
+//        request.setIdAlbum(id);
+//        return albumMapper.apply(request);
     }
 }
