@@ -25,4 +25,10 @@ public class ArtistController {
     public  Artist creatArtist(@RequestBody ArtistRequest request)
     {   return artistService.createArtist(request);     }
 
+    @DeleteMapping(path = "/{id}")
+    public Artist deleteArtist(@PathVariable Long id)
+    {
+        return this.artistService.deleteArtist(id);
+    }
+
 }
