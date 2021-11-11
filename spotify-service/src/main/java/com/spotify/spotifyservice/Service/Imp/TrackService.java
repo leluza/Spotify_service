@@ -53,14 +53,12 @@ public class TrackService implements ITrackService {
         }
     }
 
-
     @Override
     public Track createTrack(TrackRequest request) {
         Track track = trackMapper.apply(request);
         track.setIdTrack(null);
         trackRepository.save(track);
         return track;
-        //return trackMapper.apply(request);
     }
 
     @Override
@@ -104,9 +102,7 @@ public class TrackService implements ITrackService {
             {
                 trackDb.setJoinArtist(trackRqt.getJoinArtist());
             }
-
             trackRepository.save(trackDb);
-
             return trackDb;
 
         } else {
@@ -117,9 +113,5 @@ public class TrackService implements ITrackService {
                     .duration(0D)
                     .build();
         }
-
-
-        // request.setId(id);
-        // return trackMapper.apply(request);
     }
 }

@@ -21,18 +21,8 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_album")
-    private Long idAlbum;
-
+    private Long idAlbum;   // private Artist artist
     private String name;
-
     @Column(name = "id_artist")
     private Long idArtist;
-
-    // @OneToMany ( mappedBy = "joinAlbum")
-    //private List<Track> tracks ;
-
-    //@ManyToOne
-    //@JoinColumn(name="idartist")
-    //private Artist idArtist;    //artist;
-
 }

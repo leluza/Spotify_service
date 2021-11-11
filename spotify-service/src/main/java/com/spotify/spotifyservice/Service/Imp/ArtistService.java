@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @Service
 public class ArtistService implements IArtistService {
 
-
     @Autowired
     private ArtistMapper artistMapper;
 
@@ -34,14 +33,10 @@ public class ArtistService implements IArtistService {
         //se ejecuta solo una vez cuando se crea el Bean
         artists.stream().forEach(artist -> {
             artistRepository.save(artist);
-            System.out.println(artist);
         });
-
-        System.out.println("COUNT --> " + artistRepository.count());
     }
 
     public Artist getArtist(Long id) {
-
         Optional<Artist> artistOp = artistRepository.findById(id);
         if (artistOp.isPresent()) {
             return artistOp.get();
@@ -56,21 +51,10 @@ public class ArtistService implements IArtistService {
     }
 
     public Artist createArtist(ArtistRequest request) {
-
         Artist artist = artistMapper.apply(request);
-        if (request.getIdArtist() != null && artistRepository.findById(request.getIdArtist()) != null) {
-            return Artist.builder()
-                    .idArtist(0L)
-                    .gender("el artista")
-                    .name("ya EXISTE")
-                    .build();
-
-        } else {
-            artistRepository.save(artist);
-        }
-
+        artist.setIdArtist(null);
+        artistRepository.save(artist);
         return artist;
-        // return artistMapper.apply(request);
     }
 
     public Artist deleteArtist(Long id) {
@@ -89,15 +73,20 @@ public class ArtistService implements IArtistService {
     }
 
     public Artist updateArtist(Long id, ArtistRequest request) {
-
         Optional<Artist> artistOp = artistRepository.findById(id);
         Artist artistDb = artistOp.get();
         Artist artistRqt = artistMapper.apply(request);
         if (artistOp.isPresent()) {
-            artistDb.setName(artistRqt.getName());
-            artistDb.setGender(artistRqt.getGender());
-            artistDb.setImage(artistRqt.getImage());
-
+            if( artistRqt.getName() != null)
+            {
+                artistDb.setName(artistRqt.getName());
+            }
+            if( artistRqt.getGender() != null) {
+                artistDb.setGender(artistRqt.getGender());
+            }
+            if( artistRqt.getImage() != null) {
+                artistDb.setImage(artistRqt.getImage());
+            }
             artistRepository.save(artistDb);
         } else {
             return Artist.builder()
@@ -108,8 +97,5 @@ public class ArtistService implements IArtistService {
                     .build();
         }
         return artistDb;
-        // request.setIdArtist(id);
-        // return artistMapper.apply(request);
-
     }
 }

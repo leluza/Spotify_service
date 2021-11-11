@@ -37,14 +37,10 @@ public class AlbumService implements IAlbumService {
         //se ejecuta solo una vez cuando se crea el Bean
         albums.stream().forEach(album -> {
             albumRepository.save(album);
-            System.out.println(album);
         });
-
-        System.out.println("COUNT --> " + albumRepository.count());
     }
 
     public Album getAlbum(Long id) {
-
         Optional<Album> albumOp = albumRepository.findById(id);
         if (albumOp.isPresent()) {
             return albumOp.get();
@@ -56,33 +52,14 @@ public class AlbumService implements IAlbumService {
         }
     }
 
-
     public Album createAlbum(AlbumRequest request) {
-
         Album album = albumMapper.apply(request);
         album.setIdAlbum(null);
         albumRepository.save(album);
         return album;
-
-        /**
-         if (request.getIdAlbum() != null && albumRepository.findById(request.getIdAlbum()) != null) {
-         return Album.builder()
-         .idAlbum(0L)
-         .idAlbum(0L)
-         .name("EL album ya EXISTE")
-         .build();
-
-         } else {
-         albumRepository.save(album);
-         }
-
-         return album;
-         */
-        // return this.albumMapper.apply( request);
     }
 
     public Album deleteAlbum(Long id) {
-
         Optional<Album> albumOp = albumRepository.findById(id);
         if (albumOp.isPresent()) {
             albumRepository.delete(albumOp.get());
@@ -93,7 +70,6 @@ public class AlbumService implements IAlbumService {
                     .name("no se pudo eliminar el album")
                     .build();
         }
-        //return Album.builder().idalbum(id).name("n-n").build();
     }
 
     public Album updateAlbum(Long id, AlbumRequest request) {
@@ -118,7 +94,5 @@ public class AlbumService implements IAlbumService {
                     .build();
         }
         return albumDb;
-//        request.setIdAlbum(id);
-//        return albumMapper.apply(request);
     }
 }

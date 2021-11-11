@@ -26,7 +26,6 @@ public class ArtistController {
 
     @DeleteMapping(path = "/{id}")
     public Artist deleteArtist(@PathVariable Long id) {
-
         return this.artistService.deleteArtist(id);
     }
 
@@ -36,5 +35,6 @@ public class ArtistController {
 
     }
 
-
 }
+
+
