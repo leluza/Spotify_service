@@ -6,13 +6,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class Album {    //extends Artist {
+@Entity
+@Table(name = "album")
+public class Album {
 
-    private Long idArtist;
-    private Long idAlbum;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_album")
+    private Long idAlbum;   // private Artist artist
     private String name;
+    @Column(name = "id_artist")
+    private Long idArtist;
 }

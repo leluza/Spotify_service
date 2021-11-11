@@ -1,22 +1,30 @@
 package com.spotify.spotifyservice.Domain.Model;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class Track {    //extends Album {
+@Entity
+@Table(name = "track")
+public class Track {
 
-    private Long Id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idTrack;
     private String name;
-    private Long reproductions;
-    private String duration;
-    private Long idArtist;
-    private Long idAlbum;
-
-
+    private Long reproduction;
+    private Double duration;
+    @ManyToOne
+    @JoinColumn(name = "idAlbum")
+    private Album joinAlbum;
+    @ManyToOne
+    @JoinColumn(name = "idArtist")
+    private Artist joinArtist;
 }
+
+

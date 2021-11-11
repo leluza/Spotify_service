@@ -10,9 +10,13 @@ import java.util.function.Function;
 public class ArtistMapper implements Function<ArtistRequest, Artist> {
 
     @Override
-    public Artist apply(ArtistRequest artistRequest)
-    {
-        return Artist.builder().idArtist(artistRequest.getIdArtist()).gender(artistRequest.getGender()).name(artistRequest.getGender()).image(artistRequest.getImage()).build();
+    public Artist apply(ArtistRequest artistRequest) {
+        return Artist.builder()
+                .idArtist(artistRequest.getIdArtist())
+                .gender(artistRequest.getGender())
+                .name(artistRequest.getName())
+                .image(artistRequest.getImage())
+                .build();
 
     }
 }
