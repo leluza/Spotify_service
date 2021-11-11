@@ -14,17 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-
 @Entity
-@Table(name="album")
-
-public class Album {    //extends Artist {
-
-
+@Table(name = "album")
+public class Album {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_album")
+    @Column(name = "id_album")
     private Long idAlbum;
 
     private String name;
@@ -32,11 +28,11 @@ public class Album {    //extends Artist {
     @Column(name = "id_artist")
     private Long idArtist;
 
+    // @OneToMany ( mappedBy = "joinAlbum")
+    //private List<Track> tracks ;
+
     //@ManyToOne
     //@JoinColumn(name="idartist")
     //private Artist idArtist;    //artist;
-
-   // @OneToMany ( mappedBy = "album")
-   // private List<Track> tracks ;
 
 }

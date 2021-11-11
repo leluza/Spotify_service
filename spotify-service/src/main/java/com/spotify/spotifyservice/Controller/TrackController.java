@@ -15,25 +15,23 @@ public class TrackController {
     private TrackService trackService;
 
     @GetMapping(path = "/{id}")
-    public Track retrieveTrack(@PathVariable Long id)
-    {
+    public Track retrieveTrack(@PathVariable Long id) {
         return this.trackService.getTrack(id);
     }
 
     @PostMapping
-    public  Track createTrack(@RequestBody TrackRequest request)
-    {   return trackService.createTrack(request);     }
+    public Track createTrack(@RequestBody TrackRequest request) {
+        return trackService.createTrack(request);
+    }
 
     @DeleteMapping(path = "/{id}")
-    public Track deleteTrack(@PathVariable Long id)
-    {
+    public Track deleteTrack(@PathVariable Long id) {
         return this.trackService.deleteTrack(id);
     }
 
-    @PutMapping (path = "/{id}")
-    public Track updateTrack(@PathVariable Long id, @RequestBody TrackRequest request)
-    {
-        return trackService.updateTrack( id, request);
+    @PutMapping(path = "/{id}")
+    public Track updateTrack(@PathVariable Long id, @RequestBody TrackRequest request) {
+        return trackService.updateTrack(id, request);
 
     }
 }

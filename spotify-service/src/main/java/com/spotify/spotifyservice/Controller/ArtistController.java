@@ -15,25 +15,24 @@ public class ArtistController {
     private ArtistService artistService;
 
     @GetMapping(path = "/{id}")
-    public Artist retrieveArtist(@PathVariable Long id)  {
+    public Artist retrieveArtist(@PathVariable Long id) {
         return this.artistService.getArtist(id);
     }
 
     @PostMapping(path = "")
-    public  Artist createArtist(@RequestBody ArtistRequest request)
-    {   return artistService.createArtist(request);     }
+    public Artist createArtist(@RequestBody ArtistRequest request) {
+        return artistService.createArtist(request);
+    }
 
     @DeleteMapping(path = "/{id}")
-    public Artist deleteArtist(@PathVariable Long id)
-    {
+    public Artist deleteArtist(@PathVariable Long id) {
 
         return this.artistService.deleteArtist(id);
     }
 
-    @PutMapping (path = "/{id}")
-    public Artist updateArtist(@PathVariable Long id, @RequestBody ArtistRequest request)
-    {
-        return artistService.updateArtist( id, request);
+    @PutMapping(path = "/{id}")
+    public Artist updateArtist(@PathVariable Long id, @RequestBody ArtistRequest request) {
+        return artistService.updateArtist(id, request);
 
     }
 

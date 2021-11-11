@@ -2,6 +2,7 @@ package com.spotify.spotifyservice.Domain.Mapper;
 
 
 import com.spotify.spotifyservice.Controller.Request.TrackRequest;
+import com.spotify.spotifyservice.Domain.Model.Album;
 import com.spotify.spotifyservice.Domain.Model.Track;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +16,10 @@ public class TrackMapper implements Function<TrackRequest, Track> {
         return Track.builder()
                 .idTrack(trackRequest.getId())
                 .name(trackRequest.getName())
-                .reproduction(trackRequest.getReproductions())
+                .reproduction(trackRequest.getReproduction())
                 .duration(trackRequest.getDuration())
+                .joinAlbum(trackRequest.getJoinAlbum())
+                .joinArtist(trackRequest.getJoinArtist())
                 .build();
     }
 }

@@ -16,13 +16,13 @@ import java.util.List;
 @Data
 
 @Entity
-@Table(name="artist")
+@Table(name = "artist")
 
 public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idartist")
+    @Column(name = "idartist")
     private Long idArtist;
 
     private String name;

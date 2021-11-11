@@ -2,7 +2,8 @@ package com.spotify.spotifyservice.Service.Imp;
 
 import com.spotify.spotifyservice.Controller.Request.TrackRequest;
 import com.spotify.spotifyservice.Domain.Mapper.TrackMapper;
-import com.spotify.spotifyservice.Domain.Model.Album;
+import com.spotify.spotifyservice.Domain.Model.Track;
+import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Repository.TrackRepository;
 import com.spotify.spotifyservice.Service.ITrackService;
@@ -41,9 +42,9 @@ public class TrackService implements ITrackService {
 
     @Override
     public Track getTrack(Long id) {
-        Optional<Track> trackOptional = trackRepository.findById(id);
-        if (trackOptional.isPresent()) {
-            return trackOptional.get();
+        Optional<Track> trackOp = trackRepository.findById(id);
+        if (trackOp.isPresent()) {
+            return trackOp.get();
         } else {
             return Track.builder()
                     .idTrack(id)
@@ -53,10 +54,13 @@ public class TrackService implements ITrackService {
     }
 
 
-
     @Override
     public Track createTrack(TrackRequest request) {
-        return trackMapper.apply(request);
+        Track track = trackMapper.apply(request);
+        track.setIdTrack(null);
+        trackRepository.save(track);
+        return track;
+        //return trackMapper.apply(request);
     }
 
     @Override
@@ -67,7 +71,7 @@ public class TrackService implements ITrackService {
             return trackOptional.get();
         } else {
             return Track.builder()
-                    .idTrack(id)
+                    .idTrack(0L)
                     .name("no se pudo eliminar el track")
                     .build();
         }
@@ -75,8 +79,47 @@ public class TrackService implements ITrackService {
 
     @Override
     public Track updateTrack(Long id, TrackRequest request) {
+        Optional<Track> trackOp = trackRepository.findById(id);
+        Track trackDb = trackOp.get();
+        Track trackRqt = trackMapper.apply(request);
+        if (trackOp.isPresent()) {
+            if (trackRqt.getName() != null) {
+                trackDb.setName(trackRqt.getName());
+            }
+            ;
+            if (trackRqt.getReproduction() != null) {
+                trackDb.setReproduction(trackRqt.getReproduction());
+            }
+            ;
+            if (trackRqt.getDuration() != null) {
+                trackDb.setDuration(trackRqt.getDuration());
+            }
 
-        request.setId(id);
-        return trackMapper.apply(request);
+            if( trackRqt.getJoinAlbum() != null)
+            {
+                trackDb.setJoinAlbum( trackRqt.getJoinAlbum());
+            }
+
+            if( trackRqt.getJoinArtist() != null)
+            {
+                trackDb.setJoinArtist(trackRqt.getJoinArtist());
+            }
+
+            trackRepository.save(trackDb);
+
+            return trackDb;
+
+        } else {
+            return Track.builder()
+                    .idTrack(0L)
+                    .name("NO pudo ACTUALIZAR")
+                    .reproduction(0L)
+                    .duration(0D)
+                    .build();
+        }
+
+
+        // request.setId(id);
+        // return trackMapper.apply(request);
     }
 }

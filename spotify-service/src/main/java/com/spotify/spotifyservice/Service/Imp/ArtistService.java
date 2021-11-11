@@ -34,19 +34,18 @@ public class ArtistService implements IArtistService {
         //se ejecuta solo una vez cuando se crea el Bean
         artists.stream().forEach(artist -> {
             artistRepository.save(artist);
-            System.out.println( artist);
+            System.out.println(artist);
         });
 
-        System.out.println( "COUNT --> "+artistRepository.count()  );
+        System.out.println("COUNT --> " + artistRepository.count());
     }
 
     public Artist getArtist(Long id) {
 
         Optional<Artist> artistOp = artistRepository.findById(id);
-        if( artistOp.isPresent() ) {
-            return artistOp.get();}
-        else
-        {
+        if (artistOp.isPresent()) {
+            return artistOp.get();
+        } else {
             return Artist.builder()
                     .idArtist(0L)
                     .gender("no se")
@@ -71,7 +70,7 @@ public class ArtistService implements IArtistService {
         }
 
         return artist;
-       // return artistMapper.apply(request);
+        // return artistMapper.apply(request);
     }
 
     public Artist deleteArtist(Long id) {
@@ -94,10 +93,10 @@ public class ArtistService implements IArtistService {
         Optional<Artist> artistOp = artistRepository.findById(id);
         Artist artistDb = artistOp.get();
         Artist artistRqt = artistMapper.apply(request);
-        if ( artistOp.isPresent()) {
-             artistDb.setName(artistRqt.getName());
-             artistDb.setGender(artistRqt.getGender());
-             artistDb.setImage(artistRqt.getImage());
+        if (artistOp.isPresent()) {
+            artistDb.setName(artistRqt.getName());
+            artistDb.setGender(artistRqt.getGender());
+            artistDb.setImage(artistRqt.getImage());
 
             artistRepository.save(artistDb);
         } else {
@@ -110,7 +109,7 @@ public class ArtistService implements IArtistService {
         }
         return artistDb;
         // request.setIdArtist(id);
-       // return artistMapper.apply(request);
+        // return artistMapper.apply(request);
 
     }
 }

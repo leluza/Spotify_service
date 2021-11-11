@@ -13,57 +13,50 @@ import javax.persistence.*;
 @Data
 
 @Entity
-@Table(name="track")
+@Table(name = "track")
 
 public class Track {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTrack;
 
-   // @NotEmpty(message = "The 'name' field can not be empty")
-   // @NotNull (message = "The 'name' field can not be empty")
+    // @NotEmpty(message = "The 'name' field can not be empty")
+    // @NotNull (message = "The 'name' field can not be empty")
     //@Size(min=3, max=30, message="The number of characters is not allowed")
     private String name;
-
-    //private Long idArtist;
-    //private Long idAlbum;
-
     private Long reproduction;
-   // @NotNull (message = "The 'duration' field can not be empty")
+    // @NotNull (message = "The 'duration' field can not be empty")
     private Double duration;
 
     @ManyToOne
-    @JoinColumn(name ="idAlbum")
+    @JoinColumn(name = "idAlbum")
     private Album joinAlbum;
 
     @ManyToOne
-    @JoinColumn(name ="idArtist")
+    @JoinColumn(name = "idArtist")
     private Artist joinArtist;
 
 }
 
 
-
-
 /*******
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idtrack")
-    private Long idtrack;
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ @Column(name="idtrack") private Long idtrack;
 
-    private String name;
-    private Long reproductions;
-    private String duration;
+ private String name;
+ private Long reproductions;
+ private String duration;
 
-    private Long idArtist;
-    private Long idAlbum;
-
-
-   // @ManyToOne
-   // @JoinColumn( name = "idalbum")
-   // private Album album;
+ private Long idArtist;
+ private Long idAlbum;
 
 
-}
+ // @ManyToOne
+ // @JoinColumn( name = "idalbum")
+ // private Album album;
+
+
+ }
  ****/

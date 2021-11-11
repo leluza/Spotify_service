@@ -37,19 +37,18 @@ public class AlbumService implements IAlbumService {
         //se ejecuta solo una vez cuando se crea el Bean
         albums.stream().forEach(album -> {
             albumRepository.save(album);
-            System.out.println( album);
+            System.out.println(album);
         });
 
-        System.out.println( "COUNT --> "+albumRepository.count()  );
+        System.out.println("COUNT --> " + albumRepository.count());
     }
 
     public Album getAlbum(Long id) {
 
         Optional<Album> albumOp = albumRepository.findById(id);
-        if( albumOp.isPresent() ) {
-            return albumOp.get();}
-        else
-        {
+        if (albumOp.isPresent()) {
+            return albumOp.get();
+        } else {
             return Album.builder()
                     .idAlbum(id)
                     .name("no se pudo encontrar el album")
@@ -65,33 +64,32 @@ public class AlbumService implements IAlbumService {
         albumRepository.save(album);
         return album;
 
-       /**
-        if (request.getIdAlbum() != null && albumRepository.findById(request.getIdAlbum()) != null) {
-            return Album.builder()
-                    .idAlbum(0L)
-                    .idAlbum(0L)
-                    .name("EL album ya EXISTE")
-                    .build();
+        /**
+         if (request.getIdAlbum() != null && albumRepository.findById(request.getIdAlbum()) != null) {
+         return Album.builder()
+         .idAlbum(0L)
+         .idAlbum(0L)
+         .name("EL album ya EXISTE")
+         .build();
 
-        } else {
-            albumRepository.save(album);
-        }
+         } else {
+         albumRepository.save(album);
+         }
 
-        return album;
-        */
-       // return this.albumMapper.apply( request);
+         return album;
+         */
+        // return this.albumMapper.apply( request);
     }
 
     public Album deleteAlbum(Long id) {
 
         Optional<Album> albumOp = albumRepository.findById(id);
-        if( albumOp.isPresent() ) {
+        if (albumOp.isPresent()) {
             albumRepository.delete(albumOp.get());
-            return albumOp.get();}
-        else
-        {
+            return albumOp.get();
+        } else {
             return Album.builder()
-                    .idAlbum(id)
+                    .idAlbum(0L)
                     .name("no se pudo eliminar el album")
                     .build();
         }
@@ -102,9 +100,15 @@ public class AlbumService implements IAlbumService {
         Optional<Album> albumOp = albumRepository.findById(id);
         Album albumDb = albumOp.get();
         Album albumRqt = albumMapper.apply(request);
-        if ( albumOp.isPresent()) {
-            if( albumRqt.getName() != null) {albumDb.setName(albumRqt.getName());};
-            if( albumRqt.getIdArtist() != null) {albumDb.setIdArtist(albumRqt.getIdArtist());};
+        if (albumOp.isPresent()) {
+            if (albumRqt.getName() != null) {
+                albumDb.setName(albumRqt.getName());
+            }
+            ;
+            if (albumRqt.getIdArtist() != null) {
+                albumDb.setIdArtist(albumRqt.getIdArtist());
+            }
+            ;
             albumRepository.save(albumDb);
         } else {
             return Album.builder()

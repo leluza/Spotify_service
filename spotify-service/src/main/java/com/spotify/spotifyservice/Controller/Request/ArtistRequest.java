@@ -15,5 +15,5 @@ public class ArtistRequest {
     private String name;
     private String gender;
     private String image;
-  //  private List<Album> albums;
+    //  private List<Album> albums;
 }

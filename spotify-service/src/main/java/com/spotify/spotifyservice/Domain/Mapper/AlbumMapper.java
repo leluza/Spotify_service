@@ -15,8 +15,7 @@ import java.util.function.Function;
 public class AlbumMapper implements Function<AlbumRequest, Album> {
 
     @Override
-    public Album apply(AlbumRequest albumRequest)
-    {
+    public Album apply(AlbumRequest albumRequest) {
         return Album.builder()
                 .idAlbum(albumRequest.getIdAlbum())
                 .name(albumRequest.getName())
