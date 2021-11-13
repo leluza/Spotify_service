@@ -3,6 +3,7 @@ package com.spotify.spotifyservice.Service.Imp;
 import com.spotify.spotifyservice.Controller.Request.ArtistRequest;
 import com.spotify.spotifyservice.Domain.Mapper.ArtistMapper;
 import com.spotify.spotifyservice.Domain.Model.Artist;
+import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Repository.ArtistRepository;
 import com.spotify.spotifyservice.Service.IArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,14 +78,13 @@ public class ArtistService implements IArtistService {
         Artist artistDb = artistOp.get();
         Artist artistRqt = artistMapper.apply(request);
         if (artistOp.isPresent()) {
-            if( artistRqt.getName() != null)
-            {
+            if (artistRqt.getName() != null) {
                 artistDb.setName(artistRqt.getName());
             }
-            if( artistRqt.getGender() != null) {
+            if (artistRqt.getGender() != null) {
                 artistDb.setGender(artistRqt.getGender());
             }
-            if( artistRqt.getImage() != null) {
+            if (artistRqt.getImage() != null) {
                 artistDb.setImage(artistRqt.getImage());
             }
             artistRepository.save(artistDb);
@@ -98,4 +98,28 @@ public class ArtistService implements IArtistService {
         }
         return artistDb;
     }
+
+
+    @Override
+    public List<Artist> artistsRank() {
+        List<Artist> allArtists = artistRepository.artistsRank();
+        List<Artist> famousArtists = new ArrayList<>();
+        /*artists.stream().forEach(
+                                    a -> {  System.out.println( a.getIdArtist());
+                                                if( !famousArtists.contains(a) )
+                                                     {  famousArtists.add(a); }
+                                }); */
+        Iterator<Artist> it = allArtists.iterator();
+
+        while (it.hasNext()) {
+
+            Artist a = it.next();
+            if( !famousArtists.contains(a) )
+            {  famousArtists.add(a); }
+        }
+
+        return famousArtists;
+    }
+
+
 }

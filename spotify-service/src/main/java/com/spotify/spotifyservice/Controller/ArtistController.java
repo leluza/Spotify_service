@@ -3,9 +3,12 @@ package com.spotify.spotifyservice.Controller;
 
 import com.spotify.spotifyservice.Controller.Request.ArtistRequest;
 import com.spotify.spotifyservice.Domain.Model.Artist;
+import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Service.Imp.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/artist")
@@ -34,6 +37,15 @@ public class ArtistController {
         return artistService.updateArtist(id, request);
 
     }
+
+    // 5 artistas mas populares
+    @GetMapping(path = "/rank")
+    public List<Artist> artistsRank() {
+        return artistService.artistsRank();
+    }
+
+
+
 
 }
 
