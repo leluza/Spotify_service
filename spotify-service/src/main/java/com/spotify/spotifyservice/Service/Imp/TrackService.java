@@ -5,19 +5,22 @@ import com.spotify.spotifyservice.Domain.Mapper.TrackMapper;
 import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Domain.Model.Track;
+import com.spotify.spotifyservice.Domain.Model.Track;
 import com.spotify.spotifyservice.Repository.TrackRepository;
 import com.spotify.spotifyservice.Service.ITrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TrackService implements ITrackService {
+public class TrackService implements ITrackService { //}, JpaRepository<Track, Long> {
 
     @Autowired
     private TrackMapper trackMapper;
@@ -25,7 +28,7 @@ public class TrackService implements ITrackService {
     @Autowired
     private TrackRepository trackRepository;
 
-    //@Qualifier("tracks")
+    @Qualifier("tracks")
     @Autowired
     private List<Track> tracks;
 
@@ -34,10 +37,7 @@ public class TrackService implements ITrackService {
         //se ejecuta solo una vez cuando se crea el Bean
         tracks.stream().forEach(track -> {
             trackRepository.save(track);
-            System.out.println(track);
         });
-
-        System.out.println("COUNT --> " + trackRepository.count());
     }
 
     @Override
@@ -114,4 +114,51 @@ public class TrackService implements ITrackService {
                     .build();
         }
     }
+
+    @Override
+    public List<Track> rank() {
+        List<Track> tracks = trackRepository.rank();
+        return tracks;
+    }
+
+    @Override
+    public Track increment(Long id)
+    {
+        Optional<Track> trackOp = trackRepository.findById(id);
+        if (trackOp.isPresent()) {
+            Track track = trackOp.get();
+            track.setReproduction( track.getReproduction() +1);
+            trackRepository.save(track);
+            return track;
+
+        } else {
+            return Track.builder()
+                    .idTrack(id)
+                    .name("no se pudo encontrar el track")
+                    .build();
+        }
+
+    }
+
+    @Override
+    public List<Track> songsByArtistRank( Long idArtist) {
+        List<Track> allTracks = trackRepository.songsByArtistRank();
+        List<Track> famousTracks = new ArrayList<>();
+        /*tracks.stream().forEach(
+                                    a -> {  System.out.println( a.getIdTrack());
+                                                if( !famousTracks.contains(a) )
+                                                     {  famousTracks.add(a); }
+                                }); */
+        Iterator<Track> it = allTracks.iterator();
+
+        while (it.hasNext()) {
+            Track a = it.next();
+            if( !famousTracks.contains(a) )
+            {  famousTracks.add(a); }
+        }
+
+        return famousTracks;
+    }
+
+
 }
